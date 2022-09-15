@@ -1,0 +1,10 @@
+package kr.co.dstraders;
+
+public class Index {
+
+	public static String main(String[] args) {
+		// TODO Auto-generated method stub
+		return "/jsp/index.jsp";
+	}
+
+}
