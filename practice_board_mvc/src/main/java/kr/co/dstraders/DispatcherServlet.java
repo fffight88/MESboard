@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.dstraders.board.controller.BoardCommentController;
+import kr.co.dstraders.board.controller.BoardCommentFormController;
 import kr.co.dstraders.board.controller.BoardDeleteController;
 import kr.co.dstraders.board.controller.BoardDetailController;
 import kr.co.dstraders.board.controller.BoardListController;
@@ -77,6 +79,12 @@ public class DispatcherServlet extends HttpServlet{
 				break;
 			case "/login/join.do":
 				control = new JoinController();
+				break;
+			case "/board/commentForm.do":
+				control = new BoardCommentFormController();
+				break;
+			case "/board/comment.do":
+				control = new BoardCommentController();
 				break;
 			}
 			

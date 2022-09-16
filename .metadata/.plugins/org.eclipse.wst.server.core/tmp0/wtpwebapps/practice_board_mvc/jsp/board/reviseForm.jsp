@@ -34,6 +34,7 @@
 		</table>
 		<br>
 		<input type="submit" value="수정하기">
+		<input type="button" value="취소" onclick="window.close()">
 	</form>
 	</div>
 </body>

@@ -49,7 +49,7 @@
 		</table>
 	
 	<br>
-	<button onclick="location.href='${ pageContext.request.contextPath }/board/writeForm.do'" class="btn btn-outline-success">새글 등록</button>
+	<button onclick="window.open(href='${ pageContext.request.contextPath }/board/writeForm.do','commentForm', 'width=700, height=500, toolbar=1, menubar=1'); return false;">새글 등록</button>
 	
 </div>
 </body>
