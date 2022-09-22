@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.dstraders.board.vo.BoardVO;
+import kr.co.dstraders.comment.vo.CommentVO;
 
 public class BoardDAO {
 	
@@ -286,6 +287,30 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * 7. 댓글 등록 기능
+	 */
+	public void insertComment(CommentVO comment) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url,user,password);
+			
+			StringBuilder sql = new StringBuilder();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 
 	

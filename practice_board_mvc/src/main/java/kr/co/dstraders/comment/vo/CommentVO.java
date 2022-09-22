@@ -7,8 +7,7 @@ public class CommentVO {
 	private int boardNo;
 	private String boardWriter;
 	private String commenter;
-	private String content;
-	private int commentNo;
+	private String comm;
 	private Date regDate;
 	
 	public int getBoardNo() {
@@ -29,17 +28,11 @@ public class CommentVO {
 	public void setCommenter(String commenter) {
 		this.commenter = commenter;
 	}
-	public String getContent() {
-		return content;
+	public String getComm() {
+		return comm;
 	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public int getCommentNo() {
-		return commentNo;
-	}
-	public void setCommentNo(int commentNo) {
-		this.commentNo = commentNo;
+	public void setComm(String comm) {
+		this.comm = comm;
 	}
 	public Date getRegDate() {
 		return regDate;
@@ -47,13 +40,12 @@ public class CommentVO {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	
 	@Override
 	public String toString() {
-		return "CommentVO [boardNo=" + boardNo + ", boardWriter=" + boardWriter + ", commenter=" + commenter
-				+ ", content=" + content + ", commentNo=" + commentNo + ", regDate=" + regDate + "]";
+		return "CommentVO [boardNo=" + boardNo + ", boardWriter=" + boardWriter + ", commenter=" + commenter + ", comm="
+				+ comm + ", regDate=" + regDate + "]";
 	}
-	
-	
-	
+		
 	
 }
