@@ -1,0 +1,329 @@
+package kr.co.dstraders.board.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.co.dstraders.board.vo.BoardVO;
+import kr.co.dstraders.comment.vo.CommentVO;
+
+public class BoardDAO {
+	
+	/**
+	 * 1. 전체게시판 조회 기능
+	 */
+	
+	public List<BoardVO> selectAll(){ 
+	
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		List<BoardVO> boardList = new ArrayList<BoardVO>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select no, title, writer, to_char(reg_date, 'yyyy-mm-dd') as reg_date "
+				+ " from t_board " + " order by no desc ");
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			
+			conn = DriverManager.getConnection(url, user, password);
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO board = new BoardVO();
+				
+				board.setNo(rs.getInt("no"));
+				board.setTitle(rs.getString("title"));
+				board.setWriter(rs.getString("writer"));
+				board.setRegDate(rs.getDate("reg_date"));
+				
+				boardList.add(board);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return boardList;
+	}
+	
+	/**
+	 *  2. 새글 등록 서비스
+	 */
+	
+	public void insert(BoardVO board) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url, user, password);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append(" INSERT INTO t_board (NO, TITLE, WRITER, CONTENT, view_count, reg_date) ");
+			sql.append(" values (seq.nextval, ?, ?, ?, '0', sysdate) " );
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getWriter());
+			pstmt.setString(3, board.getContent());
+
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 3. 상세글보기 기능
+	 */
+	
+	public BoardVO selectByNo(int boardNo) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		BoardVO board = new BoardVO();
+		
+		try {
+			
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url,user,password);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append(" select no, title, writer, content, view_count, to_char(reg_date,'yyyy-mm-dd') as reg_date ");
+			sql.append(" from t_board ");
+			sql.append(" where no = ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, boardNo);
+			ResultSet rs =  pstmt.executeQuery();
+			
+			rs.next();
+			board.setNo(rs.getInt("no"));
+			board.setTitle(rs.getString("title"));
+			board.setWriter(rs.getString("writer"));
+			board.setContent(rs.getString("content"));
+			board.setViewCount(rs.getInt("view_count") + 1);
+			board.setRegDate(rs.getDate("reg_date"));
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return board;
+	}
+	
+	/**
+	 * 4. 조회수증가 기능
+	 */
+	
+	public void increaseViewCount(int boardNo) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url,user,password);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append(" update t_board set view_count = view_count + 1 ");
+			sql.append(" where no = ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, boardNo);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 5. 선택글 삭제 기능
+	 */
+	
+	public void deleteByNo(int boardNo) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url,user,password);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append(" delete from t_board where no = ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, boardNo);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 6. 선택글 수정 기능
+	 */
+	
+	public void reviseByNo(BoardVO board) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url,user,password);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append(" update t_board set title = ?, content = ? where no = ? ");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getNo());
+			pstmt.executeUpdate();
+						
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 7. 댓글 등록 기능
+	 */
+	public void insertComment(CommentVO comment) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "hr";
+			String password = "hr";
+			conn = DriverManager.getConnection(url,user,password);
+			
+			StringBuilder sql = new StringBuilder();
+			sql.append(" INSERT INTO t_comment (BOARDNO, BOARDWRITER, COMMENTER, COMM, REG_DATE) ");
+			sql.append(" values (?, ?, ?, ?, sysdate) " );
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, comment.getBoardNo());
+			pstmt.setString(2, comment.getBoardWriter());
+			pstmt.setString(3, comment.getCommenter());
+			pstmt.setString(4, comment.getComm());
+
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	
+
+	
+}

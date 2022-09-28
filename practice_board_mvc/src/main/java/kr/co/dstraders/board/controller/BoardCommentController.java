@@ -21,7 +21,9 @@ public class BoardCommentController implements Controller{
 		
 		BoardDAO dao = new BoardDAO();
 		
-		dao.insertComment();
+		System.out.println(comment);
+		
+		dao.insertComment(comment);
 		
 		return "/jsp/board/comment.jsp";
 				

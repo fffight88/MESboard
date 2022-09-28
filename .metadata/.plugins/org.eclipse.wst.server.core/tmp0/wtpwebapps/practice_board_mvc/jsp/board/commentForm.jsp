@@ -25,16 +25,16 @@
 		  onsubmit="return checkForm()">
 		<table border=1>
 			<tr>
-				<th width="25%">작성자</th>
+				<th width="25%">댓글러</th>
 				<td>
-					<input type="text" size="50" name="writer" style="width:99%; border: 0;" readonly
+					<input type="text" size="50" name="commenter" style="width:99%; border: 0;" readonly
 					 	value="${ currentUser.name }">
 				</td>
 			</tr>
 			<tr>
 				<th width="25%">내용</th>
 				<td>
-					<textarea rows="7" cols="50" name="content" style="resize:none; width:99%; border: 0;" required></textarea>
+					<textarea rows="7" cols="50" name="comm" style="resize:none; width:99%; border: 0;" required></textarea>
 				</td>
 			</tr>
 		</table>

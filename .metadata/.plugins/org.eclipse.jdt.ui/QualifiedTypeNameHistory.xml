@@ -3,4 +3,8 @@
     <fullyQualifiedTypeName name="kr.co.dstraders.board.controller.BoardCommentFormController"/>
     <fullyQualifiedTypeName name="kr.co.dstraders.board.controller.Controller"/>
     <fullyQualifiedTypeName name="kr.co.dstraders.board.controller.BoardCommentController"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="kr.co.dstraders.board.dao.BoardDAO"/>
+    <fullyQualifiedTypeName name="kr.co.dstraders.comment.vo.CommentVO"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 </qualifiedTypeNameHistroy>
