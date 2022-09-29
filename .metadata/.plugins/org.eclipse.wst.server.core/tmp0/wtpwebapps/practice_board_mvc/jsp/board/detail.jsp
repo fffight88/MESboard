@@ -46,7 +46,7 @@
 			<button onclick="location.href='${pageContext.request.contextPath}/board/delete.do?no=${board.no}'">삭제</button>
 		</c:if>
 		<c:if test="${ currentUser.name != null }">
-			<button onclick="window.open(href='${pageContext.request.contextPath}/board/commentForm.do', 'writeForm', 'width=700, height=500, toolbar=1, menubar=1'); return false;">댓글쓰기</button>
+			<button onclick="window.open(href='${pageContext.request.contextPath}/board/commentForm.do?no=${board.no}', 'commentForm', 'width=700, height=500, toolbar=1, menubar=1'); return false;">댓글쓰기</button>
 		</c:if>
 </div>
 </body>

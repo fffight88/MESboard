@@ -21,7 +21,7 @@
 	<h2>댓글쓰기</h2>
 	<hr>
 	<br>
-	<form action="${ pageContext.request.contextPath }/board/comment.do" method="post" name="commentForm"
+	<form action="${ pageContext.request.contextPath }/board/comment.do?no=${ board.no }" method="post" name="commentForm"
 		  onsubmit="return checkForm()">
 		<table border=1>
 			<tr>

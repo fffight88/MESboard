@@ -12,10 +12,9 @@ public class BoardCommentController implements Controller{
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		
+	
 		CommentVO comment = new CommentVO();
 		comment.setBoardNo(Integer.parseInt(request.getParameter("no")));
-		comment.setBoardWriter(request.getParameter("writer"));
 		comment.setCommenter(request.getParameter("${currentUser.name }"));
 		comment.setComm(request.getParameter("comm"));
 		

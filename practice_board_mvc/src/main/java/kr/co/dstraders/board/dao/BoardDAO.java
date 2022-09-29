@@ -306,14 +306,14 @@ public class BoardDAO {
 			conn = DriverManager.getConnection(url,user,password);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append(" INSERT INTO T_COMMENT (BOARDNO, BOARDWRITER, COMMENTER, COMM, REG_DATE) ");
-			sql.append(" VALUES (?, ?, ?, ?, SYSDATE) " );
+			sql.append(" INSERT INTO T_COMMENT (BOARDNO, COMMENTER, COMM, REG_DATE) ");
+			sql.append(" VALUES (?, ?, ?, SYSDATE) " );
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, comment.getBoardNo());
-			pstmt.setString(2, comment.getBoardWriter());
-			pstmt.setString(3, comment.getCommenter());
-			pstmt.setString(4, comment.getComm());
+	//		pstmt.setString(2, comment.getBoardWriter());
+			pstmt.setString(2, comment.getCommenter());
+			pstmt.setString(3, comment.getComm());
 
 			pstmt.executeUpdate();
 			

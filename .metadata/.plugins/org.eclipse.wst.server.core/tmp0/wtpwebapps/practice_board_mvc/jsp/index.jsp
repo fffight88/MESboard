@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div align="center">
-		<h2>MES 개발자과정 통합게시판!</h2>
+		<h2>MES 개발자과정 통합게시판</h2>
 		<hr>
 		<br>
 		<a href='${ pageContext.request.contextPath }/board/list.do' onclick="window.open(this.href, 'list', 'width=700, height=500, toolbar=1, menubar=1'); return false;">통합게시판</a><br>
